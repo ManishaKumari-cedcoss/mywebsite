@@ -39,6 +39,28 @@ add_action( 'init', 'register_menu' );
 
 add_theme_support( 'post-thumbnails' );
 
+function themename_custom_header_setup() {
+    $args = array(
+        'default-image'      => get_template_directory_uri() . 'img/default-image.jpg',
+        'default-text-color' => '000',
+        'width'              => 1000,
+        'height'             => 250,
+        'flex-width'         => true,
+        'flex-height'        => true,
+    )
+    add_theme_support( 'custom-header', $args );
+}
+add_action( 'after_setup_theme', 'themename_custom_header_setup' );
+
+
+body.category-tv { 
+	background-image: url("http://example.com/wp-content/uploads/2017/03/your-background-image.jpg"); 
+	background-position: center center; 
+	background-size: cover; 
+	background-repeat: no-repeat; 
+	background-attachment: fixed;
+	}
+
 
 
 
