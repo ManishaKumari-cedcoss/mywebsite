@@ -125,5 +125,5 @@ $args = array(
 );
 add_theme_support( 'custom-background', $args );
 
-// Automatic theme support.
+// Automatic theme to support...........
 add_theme_support( 'automatic-feed-links' );
