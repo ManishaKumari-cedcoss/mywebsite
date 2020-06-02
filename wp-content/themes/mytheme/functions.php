@@ -37,30 +37,93 @@ function register_menu() {
 
 add_action( 'init', 'register_menu' );
 
+
+// attach post thumbnail(featured image).
+
 add_theme_support( 'post-thumbnails' );
 
+/**
+ * Custom header
+ */
 function themename_custom_header_setup() {
-    $args = array(
-        'default-image'      => get_template_directory_uri() . 'img/default-image.jpg',
-        'default-text-color' => '000',
-        'width'              => 1000,
-        'height'             => 250,
-        'flex-width'         => true,
-        'flex-height'        => true,
-    )
-    add_theme_support( 'custom-header', $args );
+	$args = array(
+		'default-image'      => get_template_directory_uri() . 'img/default-image.jpg',
+		'default-text-color' => '000',
+		'width'              => 1000,
+		'height'             => 250,
+		'flex-width'         => true,
+		'flex-height'        => true,
+	);
+	add_theme_support( 'custom-header', $args );
 }
 add_action( 'after_setup_theme', 'themename_custom_header_setup' );
 
+/**
+ * Custom sidebar and widgets
+ */
+function my_register_sidebars() {
+	/* Register the 'primary' sidebar. */
+	register_sidebar(
+		array(
+			'id'            => 'primary',
+			'name'          => __( 'Primary Sidebar' ),
+			'description'   => __( 'A short description of the sidebar.' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
+		)
+	);
+	/* Repeat register_sidebar() code for additional sidebars. */
+	register_sidebar(
+		array(
+			'id'            => 'secondary',
+			'name'          => __( 'secondary Sidebar' ),
+			'description'   => __( 'A short description of the sidebar.' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
+		)
+	);
+}
+add_action( 'widgets_init', 'my_register_sidebars' );
 
-body.category-tv { 
-	background-image: url("http://example.com/wp-content/uploads/2017/03/your-background-image.jpg"); 
-	background-position: center center; 
-	background-size: cover; 
-	background-repeat: no-repeat; 
-	background-attachment: fixed;
-	}
+
+
+/**
+ * Custom post format
+ *
+ * @return void
+ */
+function themename_post_formats_setup() {
+	add_theme_support( 'post-formats', array( 'aside', 'gallery' ) );
+}
+add_action( 'after_setup_theme', 'themename_post_formats_setup' );
 
 
 
+/**
+ * Custom logo
+ */
+function themename_custom_logo_setup() {
+	$defaults = array(
+		'height'      => 100,
+		'width'       => 400,
+		'flex-height' => true,
+		'flex-width'  => true,
+		'header-text' => array( 'site-title', 'site-description' ),
+	);
+	add_theme_support( 'custom-logo', $defaults );
+}
+add_action( 'after_setup_theme', 'themename_custom_logo_setup' );
 
+// This code is responsible for to enable  Custom background color.
+$args = array(
+	'default-color' => '000',
+	'default-image' => get_template_directory_uri() . '/images/wapuu.jpg',
+);
+add_theme_support( 'custom-background', $args );
+
+// Automatic theme support.
+add_theme_support( 'automatic-feed-links' );
