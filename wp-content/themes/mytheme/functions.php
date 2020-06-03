@@ -132,31 +132,32 @@ add_theme_support( 'automatic-feed-links' );
  * User
  */
 add_action( 'template_redirect', function() {
-
-    // Get global role.
+	// Get global role.
 	global $role;
-	
 	$user = wp_get_current_user();
 	$myArray = json_decode(json_encode($user), true);
 	$role = $myArray['roles'][0];
-   
-
-	// Prevent access to page with ID of 2 and user role.
 	$page_id1 = 1963;
 	$page_id2 = 1966;
-	if (( is_page($page_id1) && $role  === "subscriber" ) || ( is_page($page_id1) || is_page($page_id2) && $role  === "editor"  )) {
-
-	// Set redirect to true by default.
+	if ( is_page($page_id1) && $role  === 'subscriber' ) {
 		$redirect = true;
-
-		
-	// Redirect people without access to login page.
-		if ( $redirect ) {
-			wp_redirect( esc_url( home_url() ) );
-       }
-
-
 	}
-
+	if ( is_page($page_id1) && $role  === 'editor' ) {
+			$redirect = true;
+	}
+	if ( is_page($page_id2) && $role === 'editor' ) {
+		$redirect = true;
+	}
+	if ( empty( $role ) ) {
+		$role = 'guest';
+	}
+	if ( is_page($page_id1) && $role  === 'guest' ) {
+		$redirect = true;
+	}
+	if ( is_page($page_id2) && $role === 'guest' ) {
+		$redirect = true;
+	}
+	if ( $redirect ) {
+			wp_redirect( esc_url( home_url() ) );
+	}
 } );
-
