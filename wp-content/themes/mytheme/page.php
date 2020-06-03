@@ -16,12 +16,11 @@
 get_header();
 
 ?>
-<?php $user=wp_get_current_user();
-$myArray = json_decode(json_encode($user), true);
-// echo '<pre>';
-// print_r($myArray);
- $role=$myArray['roles'][0];
-// echo $role;?>
+<?php
+	$user = wp_get_current_user();
+	$myArray = json_decode(json_encode($user), true);
+	$role = $myArray['roles'][0];
+?>
 
 <!-- Page Content -->
 <div class="container">
@@ -33,7 +32,9 @@ $myArray = json_decode(json_encode($user), true);
 
 <h1 class="my-4">Page Heading
 <small>Page.php</small>
-<?php echo $role;?>
+<?php
+echo $role;
+?>
 </h1>
 
 <?php

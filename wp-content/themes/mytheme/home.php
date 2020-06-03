@@ -15,14 +15,6 @@
 get_header();
 
 ?>
-<?php $user=wp_get_current_user();
-$myArray = json_decode(json_encode($user), true);
-
-//print_r($myArray);
-$role=$myArray['roles'][0];
-echo $role;?>
-
-
 <h3>This is home.php</h3>
 
 
