@@ -1,3 +1,4 @@
+
 <?php
 /**
  * The main template file
@@ -15,15 +16,19 @@
 get_header();
 
 ?>
+
+
 <?php $user=wp_get_current_user();
 $myArray = json_decode(json_encode($user), true);
 
 //print_r($myArray);
 $role=$myArray['roles'][0];
-echo $role;?>
+echo $role;
+echo '</br>';?>
 
-
-<h3>This is home.php</h3>
+<?php if($role=="author" || $role=="administrator" || $role=="Subscriber" ){
+    echo "this is subscriber page";
+    ?>
 
 
 <!-- Page Content -->
@@ -34,9 +39,9 @@ echo $role;?>
 <!-- Blog Entries Column -->
 <div class="col-md-8">
 
-<h1 class="my-4">DISPLAY
-<small>HOME PAGE</small>
-
+<h1 class="my-4">Page Heading
+<small>Page-1966</small>
+<?php echo $role;?>
 </h1>
 
 <?php
@@ -64,7 +69,6 @@ if ( have_posts() ) {
 ?>
 
 
-
 <!-- Pagination 
 <ul class="pagination justify-content-center mb-4">
 <li class="page-item">
@@ -76,7 +80,6 @@ if ( have_posts() ) {
 </ul> -->
 
 <?php
-	previous_post_link();
 	next_post_link();
 ?>
 	</div>
@@ -90,3 +93,9 @@ if ( have_posts() ) {
 <!-- /.container -->
 
 <?php get_footer(); ?>
+
+<?php }
+else{
+    echo '<h1>you are not allowed to access this page</h1>';
+}
+?>
