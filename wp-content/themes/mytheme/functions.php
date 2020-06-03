@@ -142,8 +142,37 @@ add_action( 'template_redirect', function() {
    
 
 	// Prevent access to page with ID of 2 and user role.
-	$page_id = 1963;
-	if ( is_page($page_id) && $role  === "subscriber"   ){
+	$page_id1 = 1963;
+	if ( is_page($page_id1) && $role  === "subscriber"   ){
+
+	// Set redirect to true by default.
+		$redirect = true;
+
+		
+	// Redirect people without access to login page.
+		if ( $redirect ) {
+			wp_redirect( esc_url( home_url() ) );
+       }
+
+
+	}
+
+} );
+
+add_action( 'template_redirect', function() {
+
+    // Get global role.
+	global $role;
+	
+	$user = wp_get_current_user();
+	$myArray = json_decode(json_encode($user), true);
+	$role = $myArray['roles'][0];
+   
+
+	// Prevent access to page with ID of 2 and user role.
+	$page_id1 = 1963;
+	$page_id2 = 1966;
+	if ( is_page($page_id1) || is_page($page_id2) && $role  === "editor"  ){
 
 	// Set redirect to true by default.
 		$redirect = true;
