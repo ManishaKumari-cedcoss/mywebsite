@@ -16,14 +16,17 @@
  */
 
  
-    /**
-	 * time of the plugin.
-	 */
-	register_activation_hook( __FILE__, 'budberg_active' );
-	function budberg_active() {
-		add_option( 'budberg_active', 'activated' );
-	}
-	function budberg_deactive() {
-		delete_option( 'budberg_deactive' );
-	}
-	register_deactivation_hook( __FILE__, 'budberg_deactive' );
+/**
+* add option n.
+*/
+register_activation_hook( __FILE__, 'budberg_active' );
+function budberg_active() {
+add_option( 'budberg_active', 'activated' );
+}
+/**
+ * delete option.
+ */
+function budberg_deactive() {
+delete_option( 'budberg_active' );
+}
+register_deactivation_hook( __FILE__, 'budberg_deactive' );
