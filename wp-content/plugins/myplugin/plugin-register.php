@@ -1,7 +1,7 @@
 <?php
 /**
  * @package plugin
- * Plugin Name:       hello world
+ * Plugin Name:       Budberg
  * Plugin URI:        https://example.com/plugins/the-basics/
  * Description:       Handle the basics with this plugin.
  * Version:           1.10.3
@@ -32,6 +32,22 @@ function pluginprefix_activate() {
 		flush_rewrite_rules(); 
 }
 	register_activation_hook( __FILE__, 'pluginprefix_activate' );
+
+    /**
+	 * time of the plugin.
+	 */
+
+	function add_my_menu(){
+		add_menu_page(
+		"Budberg","BudBerg","manage_options","hello-world","add_function","dashicons-visibility",);
+	}
+	add_action("admin_menu","add_my_menu");
+	
+	function add_function(){
+		echo "Activation time ";
+		$date=date("h:i:sa");
+		echo $date;
+	}
 
 	/**
 	 * Deactivation hook.
