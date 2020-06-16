@@ -1,7 +1,7 @@
 <?php
 /**
  * @package plugin
- * Plugin Name:       Budberg
+ * Plugin Name:       Budberggg
  * Plugin URI:        https://example.com/plugins/the-basics/
  * Description:       Handle the basics with this plugin.
  * Version:           1.10.3
@@ -16,17 +16,19 @@
  */
 
  
+
 /**
-* add option n.
-*/
-register_activation_hook( __FILE__, 'budberg_active' );
-function budberg_active() {
-	add_option( 'budberg_active', 'activated' );
-}
-/**
- * delete option.
+ * option is create
  */
-function budberg_deactive() {
-	delete_option( 'budberg_active' );
+function budberg_plugin() {
+	$time=date("h:i:sa");
+	add_option( 'budberg_plugin', $time );
 }
-register_deactivation_hook( __FILE__, 'budberg_deactive' );
+register_activation_hook( __FILE__, 'budberg_plugin' );
+/**
+ * Deactivate option.
+ */
+function plugin_deactivation() {
+	delete_option( 'budberg_plugin' );
+}
+register_deactivation_hook( __FILE__, 'plugin_deactivation' );
