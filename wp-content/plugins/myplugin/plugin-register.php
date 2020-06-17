@@ -32,3 +32,19 @@ function plugin_deactivation() {
 	delete_option( 'budberg_plugin' );
 }
 register_deactivation_hook( __FILE__, 'plugin_deactivation' );
+/**
+ * Add filter.
+ */
+
+
+function wporg_filter_content($content)
+{
+	if(is_single()){
+	echo $content;
+	echo '<a href="https://twitter.com/compose/tweet">CLICK HERE</a>';
+	}
+	else{
+		return $content;
+	}
+}
+add_filter('the_content', 'wporg_filter_content');
