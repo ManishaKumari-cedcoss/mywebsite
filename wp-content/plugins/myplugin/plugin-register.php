@@ -32,6 +32,7 @@ function plugin_deactivation() {
 	delete_option( 'budberg_plugin' );
 }
 register_deactivation_hook( __FILE__, 'plugin_deactivation' );
+
 /**
  * Add filter.
  */
@@ -39,11 +40,10 @@ register_deactivation_hook( __FILE__, 'plugin_deactivation' );
 
 function wporg_filter_content($content)
 {
-	if(is_single()){
-	echo $content;
-	echo '<a href="https://twitter.com/compose/tweet">CLICK HERE</a>';
-	}
-	else{
+	if( is_single( )) { ?> 
+	<a href="https://twitter.com/intent/tweet?url=<?php the_permalink(); ?>">CLICK HERE
+	<?php return $content;
+	} else{
 		return $content;
 	}
 }
