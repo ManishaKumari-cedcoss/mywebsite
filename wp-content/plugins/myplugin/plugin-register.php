@@ -41,8 +41,11 @@ register_deactivation_hook( __FILE__, 'plugin_deactivation' );
 function wporg_filter_content($content)
 {
 	if( is_single( )) { ?> 
-	<a href="https://twitter.com/compose/tweet?url=<?php the_permalink(); ?>">CLICK HERE
-	<?php return $content;
+	<a href="https://twitter.com/compose/tweet?url=<?php the_permalink(); ?>">CLICK HERE<br>
+	<?php
+	$word_count = str_word_count( wp_strip_all_tags($content)) ;
+	print_r('The total words is ' .$word_count);
+	return $content;
 	} else{
 		return $content;
 	}
