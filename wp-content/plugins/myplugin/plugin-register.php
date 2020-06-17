@@ -41,7 +41,7 @@ register_deactivation_hook( __FILE__, 'plugin_deactivation' );
 function wporg_filter_content($content)
 {
 	if( is_single( )) { ?> 
-	<a href="https://twitter.com/intent/tweet?url=<?php the_permalink(); ?>">CLICK HERE
+	<a href="https://twitter.com/compose/tweet?url=<?php the_permalink(); ?>">CLICK HERE
 	<?php return $content;
 	} else{
 		return $content;
