@@ -18,6 +18,7 @@ get_header();
 <h3>This is home.php</h3>
 
 
+
 <!-- Page Content -->
 <div class="container">
 
@@ -28,6 +29,10 @@ get_header();
 
 <h1 class="my-4">DISPLAY
 <small>HOME PAGE</small>
+<?php 
+$page_id =  get_option('themename_theme_link');
+?>
+<p><?php echo get_option('theme_display');?></p><a href="<?php echo get_the_permalink($page_id); ?>" target="blank"><?php echo get_option('theme_display_link'); ?></a> 
 
 </h1>
 

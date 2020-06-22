@@ -46,6 +46,10 @@ if ( have_posts() ) {
 		<a href="#"><?php the_category(); ?></a>
 	</div>
 </div>
+<?php if ( comments_open() || get_comments_number() ) :
+						comments_template();
+endif;
+?>
 
 		<?php
 	}
@@ -78,3 +82,4 @@ if ( have_posts() ) {
 <!-- /.container -->
 
 <?php get_footer(); ?>
+

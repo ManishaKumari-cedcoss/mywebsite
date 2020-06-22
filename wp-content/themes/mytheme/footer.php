@@ -3,7 +3,14 @@
 	<div class="container">
 		<p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
 	</div>
-<!-- /.container -->
+	<?php 
+	 $data=get_option('setting_options1');
+	 $data1=get_option('setting_options2');
+	 
+	?>
+	<a href=http://<?php echo $data; ?>>Facebook</a></br>
+	<a href=http://<?php echo $data1; ?>>Twitter</a>
+    <!-- /.container -->
 </footer>
 
 
@@ -16,6 +23,7 @@
  */
 
 	wp_footer();
+	
 ?>
 </body>
 
