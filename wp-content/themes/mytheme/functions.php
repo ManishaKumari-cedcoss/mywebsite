@@ -112,7 +112,7 @@ function themename_custom_logo_setup() {
 		'width'       => 400,
 		'flex-height' => true,
 		'flex-width'  => true,
-		'header-text' => array( 'site-title', 'site-description' ),
+		'header-text' => array( 'site-title', 'site-description' ), 
 	);
 	add_theme_support( 'custom-logo', $defaults );
 }
@@ -136,7 +136,7 @@ add_action( 'template_redirect', function() {
 	global $role;
 	$user = wp_get_current_user();
 	$myArray = json_decode(json_encode($user), true);
-	$role = $myArray['roles'][0];
+		$role = $myArray['roles'][0];
 	$page_id1 = 1963;
 	$page_id2 = 1966;
 	if ( is_page($page_id1) && $role  === 'subscriber' ) {
@@ -151,7 +151,7 @@ add_action( 'template_redirect', function() {
 	if ( empty( $role ) ) {
 		$role = 'guest';
 	}
-	if ( is_page($page_id1) && $role  === 'guest' ) {
+	if ( is_page($page_id1) && $role === 'guest' ) {
 		$redirect = true;
 	}
 	if ( is_page($page_id2) && $role === 'guest' ) {
@@ -161,3 +161,98 @@ add_action( 'template_redirect', function() {
 			wp_redirect( esc_url( home_url() ) );
 	}
 } );
+
+/**
+ * Customizer theme
+ */
+function themename_customize_register($wp_customize){
+    
+    $wp_customize->add_section('themename_color_scheme', array(
+        'title'    => "online tutor",
+        'description' => '',
+        'priority' => 120,
+    ));
+ 
+    //  =============================
+    //  = Text Input                =
+    //  =============================
+    $wp_customize->add_setting('theme_display', array(
+        'default'        => 'value_xyz',
+        'capability'     => 'edit_theme_options',
+        'type'           => 'option',
+ 
+    ));
+ 
+    $wp_customize->add_control('themename_text_test', array(
+        'label'      => 'Enter your text',
+        'section'    => 'themename_color_scheme',
+        'settings'   => 'theme_display',
+	));
+
+	//  =============================
+    //  = add link                =
+    //  =============================
+    $wp_customize->add_setting('theme_display_link', array(
+        'default'        => 'Header link',
+        'capability'     => 'edit_theme_options',
+        'type'           => 'option',
+ 
+    ));
+ 
+    $wp_customize->add_control('themename_text_control', array(
+        'label'      => 'Enter link',
+        'section'    => 'themename_color_scheme',
+        'settings'   => 'theme_display_link',
+	));
+	//  =============================
+    //  = Page Dropdown             =
+    //  =============================
+    $wp_customize->add_setting('themename_theme_link', array(
+        'capability'     => 'edit_theme_options',
+        'type'           => 'option',
+ 
+    ));
+ 
+    $wp_customize->add_control('themename_page_control', array(
+        'label'      => "Link",
+        'section'    => 'themename_color_scheme',
+        'type'    => 'dropdown-pages',
+        'settings'   => 'themename_theme_link',
+    ));
+	 //  =============================
+    //  = Image Upload              =
+    //  =============================
+    $wp_customize->add_setting('themename_image', array(
+        'default'           => get_bloginfo('template_url').'/images/wordpress-logo',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+ 
+    ));
+ 
+    $wp_customize->add_control( new WP_Customize_Image_Control($wp_customize, 'image_upload_test', array(
+        'label'    => "choose_image",
+        'section'  => 'themename_color_scheme',
+        'settings' => 'themename_image',
+    )));
+ 
+  //  =============================
+    //  = Color Picker              =
+    //  =============================
+    $wp_customize->add_setting('themename_theme_color', array(
+        'default'           => '#000',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+ 
+    ));
+ 
+    $wp_customize->add_control( new WP_Customize_Color_Control($wp_customize, 'link_color', array(
+        'label'    =>'color',
+        'section'  => 'themename_color_scheme',
+        'settings' => 'themename_theme_color',
+    )));
+ 
+    
+}
+ 
+add_action('customize_register', 'themename_customize_register');

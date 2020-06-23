@@ -82,6 +82,18 @@ esc_html( home_url( '/' ) ); ?>">
 		You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
 	</div>
 	</div>
+	<?php if(is_active_sidebar('primary')): ?>
+		<div id="seconadary" class="sidebar-container" role="complementary">
+			<div class="widget-area">
+				<?php dynamic_sidebar('primary');?>
+			</div>
+
+		</div>
+	<?php endif; ?>
+	<br/>
+	<h5>Sample Page</h5>
+	<img src="<?php echo get_option('themename_image');?>" style="height: 200px; width:200px" /> 
 
 	</div>
 
+	
