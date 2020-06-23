@@ -229,7 +229,6 @@ function ajax_request() {
         if ( $fruit == 'Banana' ) {
             $fruit = 'Apple';
         }
-     
         // Now we'll return it to the javascript function
         // Anything outputted will be returned in the response
         echo $fruit;
