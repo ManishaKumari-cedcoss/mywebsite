@@ -1,0 +1,418 @@
+function wporg_settings_init() {
+    // register a new setting for "wporg" page
+    register_setting( 'wporg', 'wporg_options' ); //pure setting ki id  ,name
+    
+    // register a new section in the "wporg" page
+    add_settings_section(
+    'wporg_section_developers',   //section ki id  
+    __( 'The Matrix has you.', 'wporg' ),  // title of section, setting ki id
+    'wporg_section_developers_cb',  // callback fun for calling field
+    'wporg' //page plug(jb menu registered krte tym use krte h)
+    );
+    
+    // register a new field in the "wporg_section_developers" section, inside the "wporg" page
+    add_settings_field(
+    'wporg_field_pill', // as of WP 4.6 this value is used only internally
+    // use $args' label_for to populate the id inside the callback        //id
+    __( 'Pill1  ', 'wporg' ), //title, setting ki id
+    'wporg_field_pill_cb',  //callback fun
+    'wporg',                // page plug
+    'wporg_section_developers',     // section ki id
+    [
+    'label_for' => 'wporg_field_pill',
+    'class' => 'wporg_row',         //class
+    'wporg_custom_data' => 'custom',
+    ]
+    );
+    
+   
+   
+ }
+
+    
+   /**
+    * register our wporg_settings_init to the admin_init action hook
+    */
+   add_action( 'admin_init', 'wporg_settings_init' );
+    
+   /**
+    * custom option and settings:
+    * callback functions
+    */
+    
+   // developers section cb
+    
+   // section callbacks can accept an $args parameter, which is an array.
+   // $args have the following keys defined: title, id, callback.
+   // the values are defined at the add_settings_section() function.
+   function wporg_section_developers_cb( $args ) {
+    ?>
+    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', 'wporg' ); ?></p>
+    <?php
+   }
+   
+    
+   // pill field cb
+    
+   // field callbacks can accept an $args parameter, which is an array.
+   // $args is defined at the add_settings_field() function.
+   // wordpress has magic interaction with the following keys: label_for, class.
+   // the "label_for" key value is used for the "for" attribute of the <label>.
+   // the "class" key value is used for the "class" attribute of the <tr> containing the field.
+   // you can add custom key value pairs to be used inside your callbacks.
+   function wporg_field_pill_cb( $args ) {
+    // get the value of the setting we've registered with register_setting()
+    $options = get_option( 'wporg_options' );
+    // output the field
+    ?>
+    <select id="<?php echo esc_attr( $args['label_for'] ); ?>"
+    data-custom="<?php echo esc_attr( $args['wporg_custom_data'] ); ?>"
+    name="wporg_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
+    >
+    <option value="red" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'red', false ) ) : ( '' ); ?>>
+    <?php esc_html_e( 'red pill', 'wporg' ); ?>
+    </option>
+    <option value="blue" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'blue', false ) ) : ( '' ); ?>>
+    <?php esc_html_e( 'blue pill', 'wporg' ); ?>
+    </option>
+    </select>
+    <p class="description">
+    <?php esc_html_e( 'You take the blue pill and the story ends. You wake in your bed and you believe whatever you want to believe.', 'wporg' ); ?>
+    </p>
+    <p class="description">
+    <?php esc_html_e( 'You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'wporg' ); ?>
+    </p>
+    <?php
+   }
+    
+   /**
+    * top level menu
+    */
+   function wporg_options_page() {
+    // add top level menu page
+    add_menu_page(
+    'WPOrg', //page title
+    'WPOrg Options', //menu title
+    'manage_options', //admin label
+    'wporg',//page slug
+    'wporg_options_page_html'//callback fun
+    );
+   }
+    
+   /**
+    * register our wporg_options_page to the admin_menu action hook
+    */
+   add_action( 'admin_menu', 'wporg_options_page' );
+    
+   /**
+    * top level menu:
+    * callback functions
+    */
+   function wporg_options_page_html() {
+    // check user capabilities
+    if ( ! current_user_can( 'manage_options' ) ) {
+    return;
+    }
+    
+    // add error/update messages
+    
+    // check if the user have submitted the settings
+    // wordpress will add the "settings-updated" $_GET parameter to the url
+    if ( isset( $_GET['settings-updated'] ) ) {
+    // add settings saved message with the class of "updated"
+    add_settings_error( 'wporg_messages', 'wporg_message', __( 'Settings Saved', 'wporg' ), 'updated' );
+    }
+    
+    // show error/update messages
+    settings_errors( 'wporg_messages' );
+    ?>
+    <div class="wrap">
+    <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+    <form action="options.php" method="post">
+    <?php
+    // output security fields for the registered setting "wporg"
+    settings_fields( 'wporg' );
+    // output setting sections and their fields
+    // (sections are registered for "wporg", each field is registered to a specific section)
+    do_settings_sections( 'wporg' );
+    // output save settings button
+    submit_button( 'Save Settings' );
+    ?>
+    </form>
+    </div>
+    <?php
+   }  
+
+
+function custom_menu_page(){
+    add_menu_page('custom_settings',  //page title
+    'own_custom_settings',  //menu title
+    'manage_options',  //admin level
+    'own-custom-settings',  //page slug
+    'callback_first'  //callback function
+);
+}
+add_action('admin_menu','custom_menu_page');
+
+function callback_first(){
+    echo "welcome to my settings";
+    ?>
+    <h1><?php echo esc_html(get_admin_page_title());?></h1>
+    <form action="options.php" method="post">
+    <?php
+    settings_fields( 'own-custom-settings' );
+    do_settings_sections( 'own-custom-settings' );
+    submit_button( 'Save Settings' );
+    ?>
+    </form>
+    <?php
+}
+
+
+ function setting_init(){
+    register_setting('own-custom-settings','setting_options');
+
+    add_settings_section(
+        'section_setting',  //id
+        'section setting',  //title
+        'callback_second',  // callback function
+        'own-custom-settings' // page slug
+
+    );
+
+    add_settings_field(
+        'setting_field',
+        'setting_field Title',
+        'callback_third',
+        'own-custom-settings',
+        'section_setting'
+    );
+}
+add_action('admin_init','setting_init');
+
+function callback_second(){
+    echo "this text is due to second callback function";
+}
+
+function callback_third(){
+    // echo "this text is due to third callback function";
+    $setting=get_option('setting_options');
+    ?>
+    <input type="text" name="setting_options" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+    <?php
+}
+
+
+
+function wporg_custom_post_type() {
+    register_post_type('wporg_product',
+        array(
+            'labels'      => array(
+                'name'          => __( 'Products', 'textdomain' ),
+                'singular_name' => __( 'Product', 'textdomain' ),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+            'rewrite'     => array( 'slug' => 'products' ), // my custom slug
+        )
+    );
+}
+add_action('init', 'wporg_custom_post_type');
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+
+  
+</head>
+<body>
+
+<div class="container">
+  <h2>Vertical (basic) form</h2>
+  <form action="#" id="frmPost" method="POST">
+    <div class="form-group">
+      <label for="Name">Name:</label>
+      <input type="text" class="form-control" id="txtName" required placeholder="Enter name" name="txtName">
+    </div>
+    <div class="form-group">
+      <label for="Email">Email:</label>
+      <input type="email" class="form-control" id="txtEmail" required placeholder="Enter Email" name="txtEmail">
+    </div>
+    <div class="form-group">
+      <label for="Message">Message:</label>
+      <input type="text" class="form-control" id="txtMessage" required placeholder="Enter your message" name="txtMessage">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+
+</body>
+</html> -->
+
+
+
+
+
+
+ jQuery(document).ready(function($) {
+
+    // jQuery("#frmPost").validate({
+    //     submitHandler: function(){
+    //         //console.log("form passes");
+    //         var Name=$("#txtName").val();
+    //         var Email=$("#txtEmail").val();
+    //         var Message=$("#txtMessage").val();
+    //         var info = new Array(Name,Email,Message);
+    //     //  console.log(info);
+
+    //         $.ajax({
+    //             url: formajax_obj.ajaxurl,
+
+    //             data : {
+    //                 'action' : 'ajax_request',
+    //                 'info' : info,
+    //                 'nonce' : formajax_obj.nonce
+
+    //             },
+
+    //             success : function(data){
+    //                 console.log(data);
+    //             },
+        
+    //             error : function(errorThrown){
+    //                 console.log(errorThrown);
+    //             }
+    //         })
+    //     }
+    // });
+    // });
+
+
+
+
+
+
+    <?php
+/**
+ * @package plugin
+ * Plugin Name:       hellobugg
+ * Plugin URI:        https://example.com/plugins/the-basics/
+ * Description:       Handle the basics with this plugin.
+ * Version:           1.10.3
+ * Requires at least: 5.2
+ * Requires PHP:      7.2
+ * Author:            Manisha
+ * Author URI:        https://author.example.com/
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       my-basics-plugin
+ * Domain Path:       /languages
+ */
+
+ 
+/**
+ * create contact form
+ */
+
+// define("THE_PATH",plugin_dir_path(__FILE__));
+ 
+
+// function feedback_form() {
+// 	add_menu_page(
+// 		'Feedback Form',  // page title.
+// 		'Feedback',  // menu title.
+// 		'manage_options',  // admin level.
+// 		'my-custom-form',  // page slug.
+// 		'callback_form'  // callback function.
+// 	);
+// }
+// add_action( 'admin_menu', 'feedback_form' );
+function feedback_form($content) {
+	if(is_page('Feedback Form')){
+		include_once plugin_dir_path(__FILE__) .'/form.php';
+	}
+	return $content;
+}
+add_filter('the_content','feedback_form');
+
+function wporg_custom_post_type() {
+    register_post_type('feedback-form',
+        array(
+            'labels'      => array(
+                'name'          => __('Feedback', 'textdomain'),
+                'singular_name' => __('feedback', 'textdomain'),
+            ),
+                'public'      => true,
+                'has_archive' => true,
+        )
+    );
+}
+add_action('init', 'wporg_custom_post_type');
+
+// function callback_form() {
+//      echo 'WELCOME TO Feedback Form';
+//      include_once plugin_dir_path(__FILE__) .'/form.php';
+//     // include_once THE_PATH . "/form.php";
+// }
+/**
+ * enqueue file
+ */
+
+function form_ajax_enqueue() {
+
+	// Enqueue javascript on the frontend.
+	wp_enqueue_script(
+		'form-ajax-script',  //js file ki id(ye id nonce me kaam atti h)
+		plugins_url() . '/myplugin/form-ajax.js', //js ki  path
+		array('jquery') //ye jquery code ko access de raha h
+	);
+
+	// The wp_localize_script allows us to output the ajax_url path for our script to use.
+	wp_localize_script( //ye script uska address batata h jaha pe rquest jani h
+		'form-ajax-script', //js file ki id
+		'formajax_obj', //name of object
+		array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ), //object value(ajax)
+			'nonce' => wp_create_nonce('ajax-nonce') //object noncevalue('id').......id can be changed
+		)
+    );
+}
+add_action( 'init', 'form_ajax_enqueue' );
+
+/**
+ * ajax handler
+ */
+
+function formajax_request() {
+    if(isset($_REQUEST)){
+        $myname=$_REQUEST['mydata'];
+        // print_r($myname);
+        $page=array();
+        $page['post_title']=$myname[0];
+        $page['post_excerpt']=$myname[1];
+        $page['post_content']=$myname[2];
+        $page['post_status']="publish";
+        $page['post_slug']=$myname[0].'-feedback';
+        $page['post_type']="feedback-form";
+
+        $post_id=wp_insert_post($page);
+        // echo $post_id;
+    }
+  
+}
+add_action( 'wp_ajax_ajax_request', 'formajax_request' );
+ 
+// If you wanted to also use the function for non-logged in users (in a theme for example)
+add_action( 'wp_ajax_nopriv_ajax_request', 'formajax_request' );
+
+

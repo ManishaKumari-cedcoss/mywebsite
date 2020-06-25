@@ -10,13 +10,11 @@
 	?>
 	<a href=http://<?php echo $data; ?>>Facebook</a></br>
 	<a href=http://<?php echo $data1; ?>>Twitter</a>
-<<<<<<< HEAD
-<!-- /.container -->
-=======
-    <!-- /.container -->
->>>>>>> 68dde4f2d8e0906aeb6f2933d8e4816587a06ac5
-</footer>
 
+<!-- /.container -->
+
+
+</footer>
 
 
 <?php

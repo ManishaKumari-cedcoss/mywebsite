@@ -56,18 +56,12 @@ function wporg_filter_content($content)
 }
 add_filter('the_content', 'wporg_filter_content');
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 68dde4f2d8e0906aeb6f2933d8e4816587a06ac5
 /**
  * Custom_menu_page
  */
 function custom_menu_page() {
 	add_menu_page(
-		'Add Link Page',  // page title.
+		'Add Link Pageee',  // page title.
 		'Add Links',  // menu title.
 		'manage_options',  // admin level.
 		'own-custom-settings',  // page slug.
@@ -92,6 +86,7 @@ function callback_page() {
 	<?php
 }
 
+.
 /**
  * Setting_init
  */
@@ -149,7 +144,7 @@ function callback_twitter() {
 	?>
 	<input type="text" name="setting_options2" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
 	<?php
-<<<<<<< HEAD
+
 }   
 
 
@@ -253,6 +248,6 @@ add_action( 'wp_ajax_ajax_request', 'ajax_request' );
  
 // If you wanted to also use the function for non-logged in users (in a theme for example)
 add_action( 'wp_ajax_nopriv_ajax_request', 'ajax_request' );
-=======
-}
->>>>>>> 68dde4f2d8e0906aeb6f2933d8e4816587a06ac5
+
+
+
