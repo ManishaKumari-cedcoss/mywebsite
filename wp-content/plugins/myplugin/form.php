@@ -17,8 +17,8 @@
         <input type="text" id="name" name="name" required placeholder="Your name.."><br>
         <label for="email">Email: </label>
         <input type="text" id="email" name="email" required placeholder="Your email.."><br>
-        <label for="subject">Feedback: </label>
-        <textarea id="feedback" name="feedback" required  placeholder="Write something.." style="height:150px"></textarea>
+        <label for="subject">Feedback : </label>
+        <textarea id="feedback" name="feedback" required  placeholder="Write something.." style="height:100px"></textarea>
         <button type="button">Submit</button>
       </form>
     <!-- </div> -->

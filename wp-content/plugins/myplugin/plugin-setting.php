@@ -65,7 +65,7 @@ function form_ajax_enqueue() {
 		'formajax_obj', //name of object
 		array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ), //object value(ajax)
-			'nonce' => wp_create_nonce('ajax-nonce') //object noncevalue('id').......id can be changed
+			'nonce' => wp_create_nonce('ajax-nonce') //object noncevalue('id')..id can be changed
 		)
     );
 }

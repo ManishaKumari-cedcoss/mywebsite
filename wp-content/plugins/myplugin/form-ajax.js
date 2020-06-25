@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
                       },
                 
                 success:function(data) {
-                    // This outputs the result of the ajax request
+                    // This outputs the result of the ajax 
                     console.log(data);
                 }
                 
