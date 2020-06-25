@@ -18,7 +18,7 @@
         <label for="email">Email: </label>
         <input type="text" id="email" name="email" required placeholder="Your email.."><br>
         <label for="subject">Feedback : </label>
-        <textarea id="feedback" name="feedback" required  placeholder="Write something.." style="height:100px"></textarea>
+        <textarea id="feedback" name="feedback" required  placeholder="Write feedback..." style="height:100px"></textarea>
         <button type="button">Submit</button>
       </form>
     <!-- </div> -->

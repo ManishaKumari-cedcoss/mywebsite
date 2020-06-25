@@ -78,9 +78,9 @@ add_action( 'init', 'form_ajax_enqueue' );
 function formajax_request() {
     if(isset($_REQUEST['mydata'])){
         $mycontent=$_REQUEST['mydata'];
-		print_r($mycontent);
+		// print_r($mycontent);
 		
-		$create_content = $mycontent[1] ."  Feed : ' ".$mycontent[2]." ' ";
+		$create_content = $mycontent[1] ."  Feedback : ' ".$mycontent[2]." ' ";
         $post_id=wp_insert_post(
 			array(
 				   'post_title' =>$mycontent[0],
