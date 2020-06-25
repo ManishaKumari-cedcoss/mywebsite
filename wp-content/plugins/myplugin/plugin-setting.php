@@ -24,7 +24,7 @@
  
 
 function feedback_form($content) {
-	if(is_page('Feedback Form')){
+	if(is_page('Feedback-Form')){
 		include_once plugin_dir_path(__FILE__) .'/form.php';
 	}
 	return $content;
@@ -76,18 +76,18 @@ add_action( 'init', 'form_ajax_enqueue' );
  */
 
 function formajax_request() {
-    if(isset($_REQUEST)){
-        $myname=$_REQUEST['mydata'];
-        // print_r($myname);
-        $page=array();
-        $page['post_title']=$myname[0];
-        $page['post_excerpt']=$myname[2];
-        $page['post_content']=$myname[1];
-        $page['post_status']="publish";
-        $page['post_slug']=$myname[0].'-feedback';
-        $page['post_type']="feedback-form";
-
-        $post_id=wp_insert_post($page);
+    if(isset($_REQUEST['mydata'])){
+        $mycontent=$_REQUEST['mydata'];
+		print_r($mycontent);
+		
+		$create_content = $mycontent[1] ."  Feed : ' ".$mycontent[2]." ' ";
+        $post_id=wp_insert_post(
+			array(
+				   'post_title' =>$mycontent[0],
+				   'post_type'  =>'feedback-form',
+				   'post_content'  =>$create_content,
+			)
+		);
         // echo $post_id;
     }
   
